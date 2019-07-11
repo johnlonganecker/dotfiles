@@ -1,48 +1,28 @@
-set nocompatible
-filetype off
+execute pathogen#infect()
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Bundle 'gmarik/vundle'
-
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
-Bundle 'vim-easymotion/'
-Bundle 'vim-gitgutter'
-Bundle 'vim-airline'
-Bundle 'vim-go'
-Bundle 'tagbar'
-Bundle 'nerdcommenter'
-" Plugin 'fatih/vim-go'
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-filetype plugin indent off
-set rtp+=$GOPATH/misc/vim
-filetype plugin indent on
 syntax on
+colorscheme desert
 
-set relativenumber
-set scrolloff=15
-colorscheme mustang
+set guifont=Inconsolata\ for\ Powerline:h15
 
-" for vim-gitgutter
-highlight clear SignColumn
+set encoding=utf-8
 
-" for vim-airline
-set laststatus=2
-let g:gitgutter_diff_args = '-w'
-" use raw grep (incase I have aliased it somehow)
-let g:gitgutter_escape_grep = 1
+set nocompatible
 
+filetype plugin on
+filetype indent on
+
+set path+=**
+
+set wildmenu
+
+set autoindent
 set expandtab
 set tabstop=2
 set shiftwidth=2
 set smartindent
 set cindent
 set cinkeys-=0#
-set autoindent
 set mouse=a
 set mousehide
 
@@ -51,57 +31,60 @@ set noswapfile
 set foldenable
 set splitbelow
 
-" removed tool bar from vim
-set guioptions=aAce
-
 "highlight our search results
 set hlsearch
 "incremental search
 set incsearch
+set scrolloff=15
 
-"for c.vim
-filetype plugin on
+" work with auto-compilers, without it live reload might not work
+set backupcopy=yes
 
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
 
-" search visual selected text
-vnoremap // y/<C-R>"<CR>
+" universal save
+imap <C-s> <esc>:w<cr>
+map <C-s> <esc>:w<cr>
 
-nmap <space> :
-nmap ,b :b#<cr>
-nmap ,t :TagbarToggle<cr>
-
-"xdebug
-nmap ,, :Dn<cr>
-nmap ,. :Up<cr>
-nmap <C-d> :Dash!<cr>
-
-"NERDTree
-nmap ,nt :NERDTreeToggle<cr>
-" Shortcut to rapidly toggle `set list`
-nmap ,li :set list!<CR>
-nmap <leader>v "+gP
-nmap <leader>o i<cr><esc>
-nmap <leader>O O<esc>
-
+"ctrl + h,j,k,l move between panes
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <leader>/ <C-_><C-_>
-map <leader>b <C-_>b
+
 map <C-n> :tabnew<cr>
 map <C-i> :tabp<cr>
 map <C-o> :tabn<cr>
 
-"uses surround plugin
-"map <leader><leader> <S-s>*gv<S-s>/
-map <leader>. :s/\/\*//gi<cr>gv:s/\*\///gi<cr>
+map <C-c> <esc>
 
-au FileType go nmap <leader>r <Plug>(go-run)
+" for vim-gitgutter
+highlight clear SignColumn
+
+"toggle between buffers
+nmap ,b :b#<cr>
+nmap ,t :TagbarToggle<cr>
+nmap <space> :
+"NERDTree
+nmap ,nt :NERDTreeToggle<cr>
+" Shortcut to rapidly toggle `set list`
+nmap ,li :set list!<CR>
+
+"search selected
+vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 "Invisible character colors
 highlight NonText guifg=#8d8ca4
@@ -111,19 +94,11 @@ highlight SpecialKey guifg=#8d8ca4
 set listchars=tab:▸-,eol:¬
 
 let NERDTreeShowHidden=1
+let g:airline_powerline_fonts = 1
 
-"Source the vimrc file afte saving it
-"if has("autocmd")
-	"autocmd bufwritepost .vimrc source $MYVIMRC
-"endif
+let g:gitgutter_diff_args = '-w'
+" use raw grep (incase I have aliased it somehow)
+let g:gitgutter_escape_grep = 1
 
-if $COLORTERM == 'gnome-terminal'
-	  set t_Co=256
-	  endif
-
-runtime macros/matchit.vim
-
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
-
+" useful for go formatting
 let g:go_fmt_command = "goimports"
