@@ -1,0 +1,60 @@
+[user]
+  name = "john longanecker"
+  email = johnlonganecker@gmail.com
+[push]
+  default = nothing
+  followTags = true
+[core]
+    excludesfile = ~/.gitignore
+    editor = vim
+    whitespace = trailing-space,space-before-tab
+[alias]
+    ci = commit -a -v
+    co = checkout
+    st = status -s
+    praise = blame
+    br = branch
+    df = diff
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    rb = rebase
+    dsf = "!f() { [ \"$GIT_PREFIX\" != \"\" ] && cd "$GIT_PREFIX"; git diff --color $@ | diff-so-fancy | less --tabs=4 -RFX; }; f"
+    stash-all = stash save --include-untracked
+[apply]
+    whitespace = fix
+[color]
+    ui = true
+    interactive = true
+[color "branch"]
+    current = yellow reverse
+    local = green
+    remote = red
+    plain = white
+    untracked = cyan
+[color "diff"]
+    meta = blue
+    frag = black
+    old = red
+    new = green
+    renames = copy
+    whitespace = blue reverse
+[color "status"]
+    added = yellow
+    updated = green
+    changed = red
+    untracked = cyan
+    nobranch = blue
+[github]
+    user = johnlonganecker
+[help]
+    autocorrect = 1
+[merge]
+    tool = opendiff
+    conflictstyle = diff3
+[pager]
+    color = true
+[status]
+	submoduleSummary = true
+  showUntrackedFiles = all
+[diff]
+	submodule = log
+	tool = vimdiff
